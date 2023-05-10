@@ -2,6 +2,7 @@ package heroku;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -51,6 +52,21 @@ public class Test_BugSite {
         Thread.sleep(1500);
         //check if URL updates
         Assert.assertEquals(driver.getCurrentUrl(), "https://www.google.com/doodles?q=wood");
+    }
+
+    @Test
+    public void test4(){
+        WebElement swedenItem = driver.findElement(By.xpath("//*[contains(text(), 'Sweden National Day 2022')]"));
+        swedenItem.click();
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.google.com/doodles/sweden-national-day-2022");
+    }
+
+    @Test
+    public void test5(){
+        WebElement dropdownLanguage = driver.findElement(By.xpath("//*[@id=\"lang-chooser\"]"));
+        Select select = new Select(dropdownLanguage);
+        select.selectByValue("fi");
+        Assert.assertEquals(driver.getCurrentUrl(), "https://www.google.com/doodles/sweden-national-day-2022?hl=fi");
     }
 
     @AfterTest
