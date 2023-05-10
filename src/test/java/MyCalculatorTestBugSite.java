@@ -1,7 +1,7 @@
 import org.example.MyCalculator;
 import org.testng.annotations.Test;
 import org.testng.Assert;
-public class MyCalculatorTest {
+public class MyCalculatorTestBugSite {
     @Test
     void testAddMethod(){
         int first = 20, second = 60;
