@@ -1,5 +1,6 @@
 package heroku;
 
+import java.util.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,6 +16,9 @@ import org.testng.xml.XmlTest;
 public class Test_MaidProtect {
     WebDriver driver;
 
+    List<String> discountedPremium = new ArrayList<String>();
+    List<String> actualPremium = new ArrayList<String>();
+
     @BeforeTest
     public WebDriver webDriverSetup() throws InterruptedException {
         System.setProperty("webdriver.chrome.driver", "/Users/lucastay/Desktop/Misc/chromedriver_mac64/chromedriver");
@@ -24,7 +28,7 @@ public class Test_MaidProtect {
         chromeOptions.addArguments("--start-maximized");
         driver = new ChromeDriver(chromeOptions);
         //DEFAULT TO GOOGLE
-        driver.get("https://google.com");
+        driver.get("https://google.com/");
 
         return driver;
     }
@@ -43,6 +47,7 @@ public class Test_MaidProtect {
         js.executeScript("window.scrollBy(0, 700)");
 
         //select work permit dropdown and option
+        Thread.sleep(500);
         WebElement workPermit = driver.findElement(By.xpath("//*[@id=\"maid-work-permit-type\"]/div/div[1]/div"));
         workPermit.click();
         WebElement renewalOption = driver.findElement(By.xpath("//*[@id=\"maid-work-permit-type\"]/div/div[1]/div/div/div/div[2]"));
@@ -58,7 +63,8 @@ public class Test_MaidProtect {
         //select policy start date
         WebElement policyStartDate = driver.findElement(By.xpath("//*[@id=\"policy-start-date\"]/div/div[1]/div[1]"));
         policyStartDate.click();
-        WebElement todayOption = driver.findElement(By.xpath("//*[@id=\"mat-datepicker-0\"]/div/mat-month-view/table/tbody/tr[4]/td[4]"));
+        Thread.sleep(200);
+        WebElement todayOption = driver.findElement(By.xpath("//*[@id=\"mat-datepicker-1\"]/div/mat-month-view/table/tbody/tr[4]/td[5]"));
         todayOption.click();
 
         //select get started button
@@ -67,6 +73,20 @@ public class Test_MaidProtect {
 
         WebElement selectPlanTitle = driver.findElement(By.xpath("//*[@id=\"plan-label-select-plan\"]"));
         Assert.assertEquals(selectPlanTitle.getText(), "SELECT PLAN");
+    }
+
+    @Test
+    void selectPlan() {
+        //retrieve discounted premium + strikeoff premium
+        WebElement discountPremium = driver.findElement(By.xpath("/html/body/app-root/page-plan/div/div/div/div[1]/div[1]/div[3]/div/div/div/div[2]/div"));
+        WebElement strikeoffPremium = driver.findElement(By.xpath("/html/body/app-root/page-plan/div/div/div/div[1]/div[1]/div[3]/div/div/div/div[3]"));
+
+        //append into string array?
+        discountedPremium.add(discountPremium.getText());
+        actualPremium.add(strikeoffPremium.getText());
+
+        System.out.println(discountedPremium);
+        System.out.println(actualPremium);
     }
 
     @AfterTest
