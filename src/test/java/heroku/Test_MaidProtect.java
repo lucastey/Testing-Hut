@@ -1,6 +1,8 @@
 package heroku;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -28,7 +30,7 @@ public class Test_MaidProtect {
         chromeOptions.addArguments("--start-maximized");
         driver = new ChromeDriver(chromeOptions);
         //DEFAULT TO GOOGLE
-        driver.get("https://google.com/");
+        driver.get("https://google.com");
 
         return driver;
     }
@@ -47,12 +49,11 @@ public class Test_MaidProtect {
         js.executeScript("window.scrollBy(0, 700)");
 
         //select work permit dropdown and option
-        Thread.sleep(500);
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
         WebElement workPermit = driver.findElement(By.xpath("//*[@id=\"maid-work-permit-type\"]/div/div[1]/div"));
         workPermit.click();
         WebElement renewalOption = driver.findElement(By.xpath("//*[@id=\"maid-work-permit-type\"]/div/div[1]/div/div/div/div[2]"));
         renewalOption.click();
-        //Thread.sleep(1000);
 
         //select nationality option
         WebElement maidNationality = driver.findElement(By.xpath("//*[@id=\"autocomplete-maid-nationality\"]/mat-form-field/div/div[1]/div/span[1]"));
@@ -61,11 +62,11 @@ public class Test_MaidProtect {
         indonesianOption.click();
 
         //select policy start date
-        WebElement policyStartDate = driver.findElement(By.xpath("//*[@id=\"policy-start-date\"]/div/div[1]/div[1]"));
-        policyStartDate.click();
-        Thread.sleep(200);
-        WebElement todayOption = driver.findElement(By.xpath("//*[@id=\"mat-datepicker-1\"]/div/mat-month-view/table/tbody/tr[4]/td[5]"));
-        todayOption.click();
+//        WebElement policyStartDate = driver.findElement(By.xpath("//*[@id=\"policy-start-date\"]/div/div[1]/div[1]"));
+//        policyStartDate.click();
+//        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+//        WebElement todayOption = driver.findElement(By.xpath("//*[@id=\"mat-datepicker-2\"]/div/mat-month-view/table/tbody/tr[4]/td[5]/div[1]"));
+//        todayOption.click();
 
         //select get started button
         WebElement getStartedButton = driver.findElement(By.xpath("//*[@id=\"btn-get-started\"]"));
